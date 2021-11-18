@@ -1,0 +1,113 @@
+[
+    {
+        "id": "0a5637260ba61eeb",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "9beb5d9a0aee00ba",
+        "type": "e-mail",
+        "z": "0a5637260ba61eeb",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "",
+        "credentials": {},
+        "x": 490,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "5db34c47087edf17",
+        "type": "function",
+        "z": "0a5637260ba61eeb",
+        "name": "",
+        "func": "msg.topic=\"TEST_Email\";\nmsg.payload=\"TEST_Text\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 240,
+        "wires": [
+            [
+                "9beb5d9a0aee00ba"
+            ]
+        ]
+    },
+    {
+        "id": "63386d807cd3932e",
+        "type": "inject",
+        "z": "0a5637260ba61eeb",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 240,
+        "wires": [
+            [
+                "5db34c47087edf17"
+            ]
+        ]
+    },
+    {
+        "id": "ed162347d88850c5",
+        "type": "e-mail in",
+        "z": "0a5637260ba61eeb",
+        "name": "",
+        "protocol": "IMAP",
+        "server": "imap.gmail.com",
+        "useSSL": true,
+        "autotls": "never",
+        "port": "993",
+        "box": "INBOX",
+        "disposition": "Read",
+        "criteria": "UNSEEN",
+        "repeat": "10",
+        "fetch": "auto",
+        "inputs": 0,
+        "credentials": {},
+        "x": 160,
+        "y": 360,
+        "wires": [
+            [
+                "46519c05d1daa427"
+            ]
+        ]
+    },
+    {
+        "id": "46519c05d1daa427",
+        "type": "debug",
+        "z": "0a5637260ba61eeb",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 360,
+        "wires": []
+    }
+]

@@ -3,10 +3,10 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-const char* ssid = "iPhone";
-const char* password = "qwertyuiop";
+const char* ssid = "TP-Link_2AD8";
+const char* password = "14730078";
 
-const char* mqtt_server = "172.20.10.11";
+const char* mqtt_server = "192.168.0.150";
 #define D3 0
 #define D4 2
 constexpr uint8_t RST_PIN = D3;     // Configurable, see typical pin layout above
@@ -105,7 +105,7 @@ void loop() {
       temp_threshold = "25.5";
       light_threshold = "400";
       login();
-    } else if (tag == "31422175") {
+    } else if (tag == "169225254228") {
       Serial.println("Access Granted!");
       buzz_right();
       user = "Sam";
@@ -125,18 +125,12 @@ void loop() {
 }
 
 void buzz_right() {
-  digitalWrite(D8, HIGH);
-  delay(100);
-  digitalWrite(D8, LOW);
-  delay(100);
-  digitalWrite(D8, HIGH);
-  delay(100);
-  digitalWrite(D8, LOW);
-  delay(100);
-  digitalWrite(D8, HIGH);
-  delay(100);
-  digitalWrite(D8, LOW);
-  delay(100);
+  for (int i = 0; i < 3; i++) {
+    digitalWrite(D8, HIGH);
+    delay(100);
+    digitalWrite(D8, LOW);
+    delay(100);
+  }
 }
 
 void buzz_wrong() {
@@ -152,16 +146,16 @@ void login() {
     int light_len = light_threshold.length() + 1;
     
     char tag_array[tag_len];
-    char name_array[name_len];
+    char namearray[name_len];
     char temp_array[temp_len];
     char light_array[light_len];
     
     tag.toCharArray(tag_array, tag_len);
-    user.toCharArray(name_array, name_len);
+    user.toCharArray(namearray, name_len);
     temp_threshold.toCharArray(temp_array, temp_len);
     light_threshold.toCharArray(light_array, light_len);
     
-    client.publish("IoTlab/Name", name_array);
+    client.publish("IoTlab/Name", namearray);
     client.publish("IoTlab/Tag", tag_array);
     client.publish("IoTlab/Temp", temp_array);
     client.publish("IoTlab/Light", light_array);

@@ -1,1 +1,707 @@
-[{"id":"58dc4ea7.7725f","type":"tab","label":"Dashboard","disabled":false,"info":""},{"id":"e8820d8e.df36f","type":"mqtt in","z":"58dc4ea7.7725f","name":"","topic":"IoTlab/temperature","qos":"2","datatype":"auto","broker":"d16f4944.4ed568","x":340,"y":220,"wires":[["b14f3385.91147","e6359bc2.e6d748"]]},{"id":"3749a89.72f2158","type":"mqtt in","z":"58dc4ea7.7725f","name":"","topic":"IoTlab/humidity","qos":"2","datatype":"auto","broker":"d16f4944.4ed568","x":320,"y":460,"wires":[["709aa137.67ecf"]]},{"id":"709aa137.67ecf","type":"ui_gauge","z":"58dc4ea7.7725f","name":"","group":"c4304a9b.41e2d8","order":0,"width":0,"height":0,"gtype":"wave","title":"Humidity","label":"%","format":"{{value}}","min":0,"max":"80","colors":["#0040b5","#00a4e6","#38c8ca"],"seg1":"","seg2":"","className":"","x":520,"y":460,"wires":[]},{"id":"b14f3385.91147","type":"ui_gauge","z":"58dc4ea7.7725f","name":"","group":"c4304a9b.41e2d8","order":1,"width":0,"height":0,"gtype":"gage","title":"Temperature","label":"C","format":"{{value}}","min":0,"max":"40","colors":["#00b500","#e6e600","#ca3838"],"seg1":"","seg2":"","className":"","x":570,"y":220,"wires":[]},{"id":"689cbb53.29f584","type":"ui_switch","z":"58dc4ea7.7725f","name":"LED","label":"LED","tooltip":"","group":"cd85fbb1.e85fe8","order":0,"width":0,"height":0,"passthru":true,"decouple":"false","topic":"IoTlab/led","topicType":"str","style":"","onvalue":"ON","onvalueType":"str","onicon":"","oncolor":"","offvalue":"OFF","offvalueType":"str","officon":"","offcolor":"","animate":false,"className":"","x":290,"y":560,"wires":[["85f542b8.c757f"]]},{"id":"85f542b8.c757f","type":"mqtt out","z":"58dc4ea7.7725f","name":"","topic":"IoTlab/led","qos":"","retain":"","broker":"d16f4944.4ed568","x":500,"y":560,"wires":[]},{"id":"480cd74b.82a388","type":"mqtt in","z":"58dc4ea7.7725f","name":"","topic":"IoTlab/photoresistor","qos":"2","datatype":"auto","broker":"d16f4944.4ed568","x":330,"y":660,"wires":[["ec309043.a6962","9ed050f4.c5bae"]]},{"id":"ec309043.a6962","type":"ui_text","z":"58dc4ea7.7725f","group":"802c4113.b3bd6","order":0,"width":0,"height":0,"name":"","label":"Threshold","format":"{{msg.payload}}","layout":"row-spread","className":"","x":560,"y":660,"wires":[]},{"id":"8d2f75a.d4f1e88","type":"ui_text","z":"58dc4ea7.7725f","group":"c4304a9b.41e2d8","order":2,"width":0,"height":0,"name":"","label":"Temperature Threshold","format":"{{msg.payload}}","layout":"row-left","className":"","x":610,"y":140,"wires":[]},{"id":"9ed050f4.c5bae","type":"function","z":"58dc4ea7.7725f","name":"send_email","func":"msg.topic=\"LED is ON\";\nmsg.payload=\"LED is ON\";\nreturn msg;","outputs":1,"noerr":0,"x":570,"y":740,"wires":[["47d1a3a4.5eccac","8590d0b9.9d0e2"]]},{"id":"47d1a3a4.5eccac","type":"e-mail","z":"58dc4ea7.7725f","server":"smtp.gmail.com","port":"465","secure":true,"tls":true,"name":"ymir.ross@gmail.com","dname":"","x":820,"y":740,"wires":[]},{"id":"8590d0b9.9d0e2","type":"debug","z":"58dc4ea7.7725f","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":790,"y":820,"wires":[]},{"id":"82c3ce81.82f56","type":"mqtt in","z":"58dc4ea7.7725f","name":"","topic":"IoTlab/Threshold","qos":"2","datatype":"auto","broker":"d16f4944.4ed568","x":340,"y":140,"wires":[["8d2f75a.d4f1e88"]]},{"id":"e6359bc2.e6d748","type":"function","z":"58dc4ea7.7725f","name":"send_email","func":"var temp = msg.payload;\n\nmsg.topic=\"Temperature is too hot\";\nmsg.payload=\"It is \" + temp + \". Would you like to turn the fan on?\";\nreturn msg;","outputs":1,"noerr":0,"x":570,"y":300,"wires":[["2778ece.015c014","8c67b2d0.bf444"]]},{"id":"2778ece.015c014","type":"e-mail","z":"58dc4ea7.7725f","server":"smtp.gmail.com","port":"465","secure":true,"tls":true,"name":"ymir.ross@gmail.com","dname":"","x":800,"y":300,"wires":[]},{"id":"8c67b2d0.bf444","type":"debug","z":"58dc4ea7.7725f","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":770,"y":360,"wires":[]},{"id":"a74bc317.ba222","type":"mqtt in","z":"58dc4ea7.7725f","name":"","topic":"IoTlab/Name","qos":"2","datatype":"auto","broker":"f222f525.9ff3f8","x":290,"y":1020,"wires":[["d0760cfc.eb2fd","e2138945.da0768"]]},{"id":"3d506985.f67446","type":"mqtt in","z":"58dc4ea7.7725f","name":"","topic":"IoTlab/Tag","qos":"2","datatype":"auto","broker":"f222f525.9ff3f8","x":280,"y":1080,"wires":[["42783179.432ae"]]},{"id":"80671a35.799428","type":"mqtt in","z":"58dc4ea7.7725f","name":"","topic":"IoTlab/Temp","qos":"2","datatype":"auto","broker":"f222f525.9ff3f8","x":290,"y":1140,"wires":[["d3ef6b94.244c38"]]},{"id":"2e4c9327.c92fbc","type":"mqtt in","z":"58dc4ea7.7725f","name":"","topic":"IoTlab/Light","qos":"2","datatype":"auto","broker":"f222f525.9ff3f8","x":290,"y":1200,"wires":[["644afa9f.e6a2f4"]]},{"id":"d0760cfc.eb2fd","type":"ui_text","z":"58dc4ea7.7725f","group":"23cfb67b.9e922a","order":3,"width":0,"height":0,"name":"","label":"Name:","format":"{{msg.payload}}","layout":"row-left","className":"","x":530,"y":1020,"wires":[]},{"id":"42783179.432ae","type":"ui_text","z":"58dc4ea7.7725f","group":"23cfb67b.9e922a","order":4,"width":0,"height":0,"name":"","label":"Tag number:","format":"{{msg.payload}}","layout":"row-left","className":"","x":550,"y":1080,"wires":[]},{"id":"2b59522.750dcae","type":"e-mail","z":"58dc4ea7.7725f","server":"smtp.gmail.com","port":"465","secure":true,"tls":true,"name":"hakimbouabdellah02@gmail.com","dname":"","x":840,"y":940,"wires":[]},{"id":"e2138945.da0768","type":"function","z":"58dc4ea7.7725f","name":"send_email","func":"var name = msg.payload;\n\nvar today = new Date();\nvar time = today.getHours() + \":\" + today.getMinutes() + \":\" + today.getSeconds();\n\nmsg.topic=\"Someone has entered\";\nmsg.payload=\"At \" + time + \", \" + name + \" is here.\";\nreturn msg;","outputs":1,"noerr":0,"x":550,"y":940,"wires":[["2b59522.750dcae","f800f231.553b8"]]},{"id":"f800f231.553b8","type":"debug","z":"58dc4ea7.7725f","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"false","x":770,"y":1020,"wires":[]},{"id":"d3ef6b94.244c38","type":"ui_text_input","z":"58dc4ea7.7725f","name":"","label":"Temperature","tooltip":"","group":"23cfb67b.9e922a","order":4,"width":0,"height":0,"passthru":true,"mode":"number","delay":"0","topic":"topic","sendOnBlur":true,"className":"","topicType":"msg","x":550,"y":1140,"wires":[[]]},{"id":"644afa9f.e6a2f4","type":"ui_text_input","z":"58dc4ea7.7725f","name":"","label":"Light:","tooltip":"","group":"23cfb67b.9e922a","order":4,"width":0,"height":0,"passthru":true,"mode":"number","delay":300,"topic":"topic","sendOnBlur":true,"className":"","topicType":"msg","x":530,"y":1200,"wires":[[]]},{"id":"26a8f6c.9c20c0a","type":"debug","z":"58dc4ea7.7725f","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","x":950,"y":1380,"wires":[]},{"id":"c6155d40.a421e","type":"exec","z":"58dc4ea7.7725f","command":"python3 /home/pi/Documents/node-red.py","addpay":true,"append":"","useSpawn":"true","timer":"","oldrc":false,"name":"","x":620,"y":1340,"wires":[["26a8f6c.9c20c0a","23180952.9cc626"],[],[]]},{"id":"23180952.9cc626","type":"ui_text","z":"58dc4ea7.7725f","group":"c5457664.225658","order":1,"width":6,"height":1,"name":"","label":"Detected Devices:","format":"{{msg.payload}}","layout":"col-center","className":"","x":990,"y":1280,"wires":[]},{"id":"8a571b9.0eb0ee8","type":"ui_button","z":"58dc4ea7.7725f","name":"","group":"c5457664.225658","order":1,"width":0,"height":0,"passthru":false,"label":"Scan Devices","tooltip":"","color":"","bgcolor":"","className":"","icon":"","payload":"","payloadType":"str","topic":"topic","topicType":"msg","x":300,"y":1340,"wires":[["c6155d40.a421e"]]},{"id":"d16f4944.4ed568","type":"mqtt-broker","z":"","name":"","broker":"localhost","port":"1883","clientid":"","usetls":false,"compatmode":false,"keepalive":"60","cleansession":true,"birthTopic":"","birthQos":"0","birthPayload":"","closeTopic":"","closeQos":"0","closePayload":"","willTopic":"","willQos":"0","willPayload":""},{"id":"c4304a9b.41e2d8","type":"ui_group","z":"","name":"Weather","tab":"afcd87c5.186998","order":1,"disp":true,"width":"6","collapse":false,"className":""},{"id":"cd85fbb1.e85fe8","type":"ui_group","z":"","name":"LED","tab":"afcd87c5.186998","order":3,"disp":true,"width":"6","collapse":false,"className":""},{"id":"802c4113.b3bd6","type":"ui_group","z":"","name":"Photoresistor","tab":"afcd87c5.186998","order":4,"disp":true,"width":"6","collapse":false,"className":""},{"id":"f222f525.9ff3f8","type":"mqtt-broker","z":"","name":"","broker":"localhost","port":"1883","clientid":"","usetls":false,"compatmode":false,"keepalive":"60","cleansession":true,"birthTopic":"","birthQos":"0","birthPayload":"","closeTopic":"","closeQos":"0","closePayload":"","willTopic":"","willQos":"0","willPayload":""},{"id":"23cfb67b.9e922a","type":"ui_group","z":"","name":"RFID","tab":"87dc4eac.daedc","order":2,"disp":true,"width":"6","collapse":false,"className":""},{"id":"c5457664.225658","type":"ui_group","z":"","name":"DetectedDevices","tab":"3fd2e9e3.65db56","order":1,"disp":true,"width":"6","collapse":false,"className":""},{"id":"afcd87c5.186998","type":"ui_tab","z":"","name":"Dashboard","icon":"dashboard","disabled":false,"hidden":false},{"id":"87dc4eac.daedc","type":"ui_tab","z":"","name":"Dashboard","icon":"dashboard","disabled":false,"hidden":false},{"id":"3fd2e9e3.65db56","type":"ui_tab","z":"","name":"Bluetooth","icon":"dashboard","disabled":false,"hidden":false}]
+[
+    {
+        "id": "58dc4ea7.7725f",
+        "type": "tab",
+        "label": "Dashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e8820d8e.df36f",
+        "type": "mqtt in",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "topic": "IoTlab/temperature",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "d16f4944.4ed568",
+        "inputs": 0,
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "b14f3385.91147",
+                "e6359bc2.e6d748"
+            ]
+        ]
+    },
+    {
+        "id": "b14f3385.91147",
+        "type": "ui_gauge",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "group": "fa66e2c5226dbcbf",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "40",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 570,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "689cbb53.29f584",
+        "type": "ui_switch",
+        "z": "58dc4ea7.7725f",
+        "name": "LED",
+        "label": "LED",
+        "tooltip": "",
+        "group": "cd85fbb1.e85fe8",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "IoTlab/led",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 330,
+        "y": 480,
+        "wires": [
+            [
+                "85f542b8.c757f"
+            ]
+        ]
+    },
+    {
+        "id": "85f542b8.c757f",
+        "type": "mqtt out",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "topic": "IoTlab/led",
+        "qos": "",
+        "retain": "",
+        "broker": "d16f4944.4ed568",
+        "x": 540,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "480cd74b.82a388",
+        "type": "mqtt in",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "topic": "IoTlab/photoresistor",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "d16f4944.4ed568",
+        "nl": false,
+        "rap": false,
+        "inputs": 0,
+        "x": 330,
+        "y": 580,
+        "wires": [
+            [
+                "ec309043.a6962",
+                "9ed050f4.c5bae"
+            ]
+        ]
+    },
+    {
+        "id": "ec309043.a6962",
+        "type": "ui_text",
+        "z": "58dc4ea7.7725f",
+        "group": "802c4113.b3bd6",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Threshold",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 560,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "8d2f75a.d4f1e88",
+        "type": "ui_text",
+        "z": "58dc4ea7.7725f",
+        "group": "fa66e2c5226dbcbf",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Temperature Threshold",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 610,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "9ed050f4.c5bae",
+        "type": "function",
+        "z": "58dc4ea7.7725f",
+        "name": "send_email",
+        "func": "msg.topic=\"LED is ON\";\nmsg.payload=\"LED is ON\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 660,
+        "wires": [
+            [
+                "47d1a3a4.5eccac",
+                "8590d0b9.9d0e2"
+            ]
+        ]
+    },
+    {
+        "id": "8590d0b9.9d0e2",
+        "type": "debug",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 790,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "82c3ce81.82f56",
+        "type": "mqtt in",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "topic": "IoTlab/Threshold",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "d16f4944.4ed568",
+        "inputs": 0,
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "8d2f75a.d4f1e88"
+            ]
+        ]
+    },
+    {
+        "id": "e6359bc2.e6d748",
+        "type": "function",
+        "z": "58dc4ea7.7725f",
+        "name": "send_email",
+        "func": "var temp = msg.payload;\n\nmsg.topic=\"Temperature is too hot\";\nmsg.payload=\"It is \" + temp + \". Would you like to turn the fan on?\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 300,
+        "wires": [
+            [
+                "2778ece.015c014",
+                "8c67b2d0.bf444"
+            ]
+        ]
+    },
+    {
+        "id": "8c67b2d0.bf444",
+        "type": "debug",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 770,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "a74bc317.ba222",
+        "type": "mqtt in",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "topic": "IoTlab/Name",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "f222f525.9ff3f8",
+        "inputs": 0,
+        "x": 290,
+        "y": 900,
+        "wires": [
+            [
+                "d0760cfc.eb2fd",
+                "e2138945.da0768"
+            ]
+        ]
+    },
+    {
+        "id": "3d506985.f67446",
+        "type": "mqtt in",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "topic": "IoTlab/Tag",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "f222f525.9ff3f8",
+        "inputs": 0,
+        "x": 280,
+        "y": 960,
+        "wires": [
+            [
+                "42783179.432ae"
+            ]
+        ]
+    },
+    {
+        "id": "80671a35.799428",
+        "type": "mqtt in",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "topic": "IoTlab/Temp",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "f222f525.9ff3f8",
+        "inputs": 0,
+        "x": 290,
+        "y": 1020,
+        "wires": [
+            [
+                "d3ef6b94.244c38"
+            ]
+        ]
+    },
+    {
+        "id": "2e4c9327.c92fbc",
+        "type": "mqtt in",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "topic": "IoTlab/Light",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "f222f525.9ff3f8",
+        "inputs": 0,
+        "x": 290,
+        "y": 1080,
+        "wires": [
+            [
+                "644afa9f.e6a2f4"
+            ]
+        ]
+    },
+    {
+        "id": "d0760cfc.eb2fd",
+        "type": "ui_text",
+        "z": "58dc4ea7.7725f",
+        "group": "96781f22fe69307c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Name:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 530,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "42783179.432ae",
+        "type": "ui_text",
+        "z": "58dc4ea7.7725f",
+        "group": "96781f22fe69307c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Tag number:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 550,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "e2138945.da0768",
+        "type": "function",
+        "z": "58dc4ea7.7725f",
+        "name": "send_email",
+        "func": "var name = msg.payload;\n\nvar today = new Date();\nvar time = today.getHours() + \":\" + today.getMinutes() + \":\" + today.getSeconds();\n\nmsg.topic=\"Someone has entered\";\nmsg.payload=\"At \" + time + \", \" + name + \" is here.\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 820,
+        "wires": [
+            [
+                "2b59522.750dcae",
+                "f800f231.553b8"
+            ]
+        ]
+    },
+    {
+        "id": "f800f231.553b8",
+        "type": "debug",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 770,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "d3ef6b94.244c38",
+        "type": "ui_text_input",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "label": "Temperature",
+        "tooltip": "",
+        "group": "96781f22fe69307c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "number",
+        "delay": "0",
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 550,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "644afa9f.e6a2f4",
+        "type": "ui_text_input",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "label": "Light:",
+        "tooltip": "",
+        "group": "96781f22fe69307c",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "mode": "number",
+        "delay": 300,
+        "topic": "topic",
+        "sendOnBlur": true,
+        "className": "",
+        "topicType": "msg",
+        "x": 530,
+        "y": 1080,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "26a8f6c.9c20c0a",
+        "type": "debug",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 910,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "c6155d40.a421e",
+        "type": "exec",
+        "z": "58dc4ea7.7725f",
+        "command": "python3 /home/pi/Documents/node-red.py",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 580,
+        "y": 1240,
+        "wires": [
+            [
+                "26a8f6c.9c20c0a",
+                "23180952.9cc626"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "23180952.9cc626",
+        "type": "ui_text",
+        "z": "58dc4ea7.7725f",
+        "group": "c5457664.225658",
+        "order": 1,
+        "width": 6,
+        "height": 1,
+        "name": "",
+        "label": "Detected Devices:",
+        "format": "{{msg.payload}}",
+        "layout": "col-center",
+        "className": "",
+        "x": 950,
+        "y": 1180,
+        "wires": []
+    },
+    {
+        "id": "8a571b9.0eb0ee8",
+        "type": "ui_button",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "group": "c5457664.225658",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Scan Devices",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 260,
+        "y": 1240,
+        "wires": [
+            [
+                "c6155d40.a421e"
+            ]
+        ]
+    },
+    {
+        "id": "47d1a3a4.5eccac",
+        "type": "e-mail",
+        "z": "58dc4ea7.7725f",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "ymir.ross@gmail.com",
+        "dname": "",
+        "x": 820,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "2778ece.015c014",
+        "type": "e-mail",
+        "z": "58dc4ea7.7725f",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "ymir.ross@gmail.com",
+        "dname": "",
+        "x": 800,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "2b59522.750dcae",
+        "type": "e-mail",
+        "z": "58dc4ea7.7725f",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "hakimbouabdellah02@gmail.com",
+        "dname": "",
+        "x": 840,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "e765a718feff13f0",
+        "type": "mqtt in",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "topic": "IoTlab/humidity",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "d16f4944.4ed568",
+        "inputs": 0,
+        "x": 360,
+        "y": 380,
+        "wires": [
+            [
+                "79e9bc888ffb6a42"
+            ]
+        ]
+    },
+    {
+        "id": "79e9bc888ffb6a42",
+        "type": "ui_gauge",
+        "z": "58dc4ea7.7725f",
+        "name": "",
+        "group": "fa66e2c5226dbcbf",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "wave",
+        "title": "Humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "80",
+        "colors": [
+            "#0040b5",
+            "#00a4e6",
+            "#38c8ca"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "className": "",
+        "x": 560,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "b89562cb727fa5b0",
+        "type": "ui_spacer",
+        "z": "58dc4ea7.7725f",
+        "name": "spacer",
+        "group": "c5457664.225658",
+        "order": 7,
+        "width": 1,
+        "height": 1
+    },
+    {
+        "id": "d16f4944.4ed568",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "fa66e2c5226dbcbf",
+        "type": "ui_group",
+        "name": "Weather",
+        "tab": "c998b11554c12226",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "cd85fbb1.e85fe8",
+        "type": "ui_group",
+        "name": "LED",
+        "tab": "c998b11554c12226",
+        "order": 3,
+        "disp": true,
+        "width": "3",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "802c4113.b3bd6",
+        "type": "ui_group",
+        "name": "Photoresistor",
+        "tab": "c998b11554c12226",
+        "order": 4,
+        "disp": true,
+        "width": "4",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f222f525.9ff3f8",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "96781f22fe69307c",
+        "type": "ui_group",
+        "name": "RFID",
+        "tab": "c998b11554c12226",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c5457664.225658",
+        "type": "ui_group",
+        "name": "Detected Devices",
+        "tab": "c998b11554c12226",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "c998b11554c12226",
+        "type": "ui_tab",
+        "name": "Dashboard",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

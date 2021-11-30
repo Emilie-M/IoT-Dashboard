@@ -115,6 +115,10 @@ void loop() {
     } else {
       Serial.println("Access Denied!");
       buzz_wrong();
+      user = "---";
+      tag = "---";
+      temp_threshold = "---";
+      light_threshold = "---";
     }
 
     tag = "";

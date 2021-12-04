@@ -1,0 +1,162 @@
+[
+    {
+        "id": "4673e95c539295ad",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7a178b8bfe4d8cfa",
+        "type": "debug",
+        "z": "4673e95c539295ad",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 930,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "8889b4cba96ec891",
+        "type": "delay",
+        "z": "4673e95c539295ad",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "20",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 380,
+        "y": 380,
+        "wires": [
+            [
+                "7764bda8b9907e7f"
+            ]
+        ]
+    },
+    {
+        "id": "7764bda8b9907e7f",
+        "type": "e-mail in",
+        "z": "4673e95c539295ad",
+        "name": "",
+        "protocol": "IMAP",
+        "server": "imap.gmail.com",
+        "useSSL": true,
+        "autotls": "never",
+        "port": "993",
+        "box": "INBOX",
+        "disposition": "None",
+        "criteria": "UNSEEN",
+        "repeat": "5",
+        "fetch": "trigger",
+        "inputs": 1,
+        "credentials": {
+            "userid": "exampleemail"
+        },
+        "x": 550,
+        "y": 380,
+        "wires": [
+            [
+                "f9cbcd5cb283a954"
+            ]
+        ]
+    },
+    {
+        "id": "f7a8b275a92cba5d",
+        "type": "function",
+        "z": "4673e95c539295ad",
+        "name": "",
+        "func": "var temp = msg.payload;\n\nmsg.topic=\"Temperature is too hot\";\nmsg.payload=\"It is \" + temp + \". Would you like to turn the fan on?\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 280,
+        "wires": [
+            [
+                "19439c0011e88aca"
+            ]
+        ]
+    },
+    {
+        "id": "19439c0011e88aca",
+        "type": "e-mail",
+        "z": "4673e95c539295ad",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "secure": true,
+        "tls": true,
+        "name": "exampleemail@gmail.com",
+        "dname": "",
+        "credentials": {},
+        "x": 750,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "3158f99350aae91d",
+        "type": "inject",
+        "z": "4673e95c539295ad",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 340,
+        "wires": [
+            [
+                "f7a8b275a92cba5d",
+                "8889b4cba96ec891"
+            ]
+        ]
+    },
+    {
+        "id": "f9cbcd5cb283a954",
+        "type": "function",
+        "z": "4673e95c539295ad",
+        "name": "",
+        "func": "var payload = msg.payload.trim().toUpperCase();\n\nif(payload.includes(\"YES\")){\n   msg.payload = \"Yes\";\n}else {\n   msg.payload = \"No\";\n}\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 380,
+        "wires": [
+            [
+                "7a178b8bfe4d8cfa"
+            ]
+        ]
+    }
+]

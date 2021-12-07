@@ -1,10 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-//#include "DHT.h"
 #include "DHTesp.h"
 
 DHTesp dht;
-//#define DHTTYPE DHT11   // DHT 11
 
 const char* ssid = "TP-Link_8856";
 const char* password = "87973365";

@@ -50,25 +50,13 @@ void callback(String topic, byte* message, unsigned int length) {
     messageTemp += (char)message[i];
   }
   Serial.println();
-
-//  if(topic=="IoTlab/led"){
-//      Serial.print("Changing LED to ");
-//      if(messageTemp == "ON"){
-//        digitalWrite(lamp, HIGH);
-//        Serial.print("On");
-//      }
-//      else if(messageTemp == "OFF"){
-//        digitalWrite(lamp, LOW);
-//        Serial.print("Off");
-//      }
-//  }
 }
 
 void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
 
-    if (client.connect("ESP8266Client")) {
+    if (client.connect("tempClient")) {
       Serial.println("connected");
       client.subscribe("IoTlab/led");
     } else {
@@ -81,8 +69,7 @@ void reconnect() {
 }
 
 void setup() {
-  //pinMode(lamp, OUTPUT);
-  
+
   //DHT11 setup
   dht.setup(DHTPin, DHTesp::DHT11);
 
@@ -104,7 +91,7 @@ void loop() {
     reconnect();
   }
   if(!client.loop())
-    client.connect("ESP8266Client");
+    client.connect("tempClient");
 
   float temp = dht.getTemperature();
   float hum = dht.getHumidity();

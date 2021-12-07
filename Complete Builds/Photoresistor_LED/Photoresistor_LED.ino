@@ -1,27 +1,20 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-#include "DHTesp.h"
-
-DHTesp dht;
 
 const char* ssid = "Mayodon";
 const char* password = "5400coolbrook";
 
 const char* mqtt_server = "test.mosquitto.org";
 
-WiFiClient tempClient;
-PubSubClient client(tempClient);
+WiFiClient ledClient;
+PubSubClient client(ledClient);
 
-//DHT pins and temperature threshold
-const int DHTPin = 12;
-const float temp_threshold = 26;
+//LED pins and photoresistor
+const int led1 = 15;
+const int led2 = 13;
+const int ldr = A0;
 
-//DC motor pins
-const int enable = 4;
-const int input1 = 5;
-const int input2 = 16;
-
-//const int lamp = 5;
+const float ldr_threshold = 300;
 
 void setup_wifi() {
   delay(10);
@@ -51,24 +44,26 @@ void callback(String topic, byte* message, unsigned int length) {
   }
   Serial.println();
 
-//  if(topic=="IoTlab/led"){
-//      Serial.print("Changing LED to ");
-//      if(messageTemp == "ON"){
-//        digitalWrite(lamp, HIGH);
-//        Serial.print("On");
-//      }
-//      else if(messageTemp == "OFF"){
-//        digitalWrite(lamp, LOW);
-//        Serial.print("Off");
-//      }
-//  }
+  if(topic == "IoTlab/led"){
+      Serial.print("Changing LED to ");
+      if(messageTemp == "ON"){
+        digitalWrite(led1, HIGH);
+        digitalWrite(led2, HIGH);
+        Serial.print("On");
+      }
+      else if(messageTemp == "OFF"){
+        digitalWrite(led1, LOW);
+        digitalWrite(led2, LOW);
+        Serial.print("Off");
+      }
+  }
 }
 
 void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
 
-    if (client.connect("ESP8266Client")) {
+    if (client.connect("ledClient")) {
       Serial.println("connected");
       client.subscribe("IoTlab/led");
     } else {
@@ -81,15 +76,11 @@ void reconnect() {
 }
 
 void setup() {
-  //pinMode(lamp, OUTPUT);
   
-  //DHT11 setup
-  dht.setup(DHTPin, DHTesp::DHT11);
-
-  //DC motor setup
-  pinMode(enable, OUTPUT);
-  pinMode(input1, OUTPUT);
-  pinMode(input2, OUTPUT);
+  //LEDs and photoresistor setup
+  pinMode(ledPin1, OUTPUT);
+  pinMode(ledPin2, OUTPUT);
+  pinMode(ldrPin, INPUT);
   
   Serial.begin(115200);
   setup_wifi();
@@ -99,33 +90,34 @@ void setup() {
 }
 
 void loop() {
-
+  
   if (!client.connected()) {
     reconnect();
   }
-  if(!client.loop())
-    client.connect("ESP8266Client");
+  
+  if(!client.loop()) {
+    client.connect("ledClient");
+  }
 
-  float temp = dht.getTemperature();
-  float hum = dht.getHumidity();
-    
-  char tempArr [8];
-  dtostrf(temp,6,2,tempArr);
-  char humArr [8];
-  dtostrf(hum,6,2,humArr);
+  int ldrstatus = analogRead(ldr);
+  
+  if (ldrstatus <= ldr_threshold) {
+    digitalWrite(ledPin1, LOW);
+    digitalWrite(ledPin2, LOW);
+    Serial.print(ldrstatus);
+    Serial.println("LED is OFF");
+  } else {
+    digitalWrite(ledPin1, HIGH);
+    digitalWrite(ledPin2, HIGH);
+    Serial.print(ldrstatus);
+    Serial.println("LED is ON");
+    delay(10000);
+  }
 
-  char threshArr[8];
-  dtostrf(temp_threshold,6,2,threshArr);
-
-  client.publish("IoTlab/temperature", tempArr);
-  client.publish("IoTlab/humidity", humArr);
-  client.publish("IoTlab/threshold", threshArr);
-
-  if (temp >= temp_threshold) {
-      digitalWrite(enable, HIGH);
-      digitalWrite(input1, LOW);
-      digitalWrite(input2, HIGH);
-    }
+  char ldr_thresholdArr[8];
+  
+  dtostrf(ldr_threshold,6,2,ldr_thresholdArr);
+  client.publish("IoTlab/photoresistor", ldr_thresholdArr);
 
   delay(1000);
 } 

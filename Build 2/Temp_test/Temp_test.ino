@@ -21,7 +21,7 @@ const char* mqtt_server = "172.20.10.7";
 
 /* The sign in credentials */
 #define AUTHOR_EMAIL "emmymayodon@gmail.com" //CHANGE
-#define AUTHOR_PASSWORD "YmirRossQueen123" //CHANGE
+#define AUTHOR_PASSWORD "" //CHANGE
 
 /* Recipient's email*/
 #define RECIPIENT_EMAIL "hakimbouabdellah02@gmail.com" //CHANGE

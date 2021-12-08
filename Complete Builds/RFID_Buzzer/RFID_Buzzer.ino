@@ -147,17 +147,20 @@ void login() {
     int light_len = light_threshold.length() + 1;
     
     char tag_array[tag_len];
-    char namearray[name_len];
+    char name_array[name_len];
     char temp_array[temp_len];
     char light_array[light_len];
     
     tag.toCharArray(tag_array, tag_len);
-    user.toCharArray(namearray, name_len);
+    user.toCharArray(name_array, name_len);
     temp_threshold.toCharArray(temp_array, temp_len);
     light_threshold.toCharArray(light_array, light_len);
     
-    client.publish("IoTlab/Name", namearray);
+    client.publish("IoTlab/Name", name_array);
     client.publish("IoTlab/Tag", tag_array);
     client.publish("IoTlab/Temp", temp_array);
     client.publish("IoTlab/Light", light_array);
+
+    client.publish("IoTlab/threshold", temp_array);
+    client.publish("IoTlab/photoresistor", light_array);
 }

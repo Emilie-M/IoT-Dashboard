@@ -58,7 +58,6 @@ void reconnect() {
 
     if (client.connect("tempClient")) {
       Serial.println("connected");
-      client.subscribe("IoTlab/led");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());

@@ -4,24 +4,22 @@
 
 DHTesp dht;
 
-const char* ssid = "Mayodon";
-const char* password = "5400coolbrook";
+const char* ssid = "CSIS Security Van #2";
+const char* password = "jigx5340+";
 
-const char* mqtt_server = "test.mosquitto.org";
+const char* mqtt_server = "192.168.43.54";
 
 WiFiClient tempClient;
 PubSubClient client(tempClient);
 
 //DHT pins and temperature threshold
 const int DHTPin = 12;
-const float temp_threshold = 26;
+const float temp_threshold = 24;
 
 //DC motor pins
 const int enable = 4;
 const int input1 = 5;
 const int input2 = 16;
-
-//const int lamp = 5;
 
 void setup_wifi() {
   delay(10);
@@ -111,7 +109,12 @@ void loop() {
       digitalWrite(enable, HIGH);
       digitalWrite(input1, LOW);
       digitalWrite(input2, HIGH);
-    }
+  }
+  else {
+    digitalWrite(enable, LOW);
+    digitalWrite(input1, HIGH);
+    digitalWrite(input2, LOW);
+  }
 
   delay(1000);
 } 

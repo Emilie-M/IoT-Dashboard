@@ -3,10 +3,10 @@
 #include <SPI.h>
 #include <MFRC522.h>
 
-const char* ssid = "Mayodon";
-const char* password = "5400coolbrook";
+const char* ssid = "CSIS Security Van #2";
+const char* password = "jigx5340+";
 
-const char* mqtt_server = "test.mosquitto.org";
+const char* mqtt_server = "192.168.43.54";
 #define D3 0
 #define D4 2
 constexpr uint8_t RST_PIN = D3;
@@ -99,23 +99,24 @@ void loop() {
       Serial.println("Access Granted!");
       buzz_right();
       user = "Allie";
-      temp_threshold = "25.5";
-      light_threshold = "400";
+      temp_threshold = "25.50";
+      light_threshold = "930.00";
       login();
     } else if (tag == "169225254228") {
       Serial.println("Access Granted!");
       buzz_right();
       user = "Sam";
-      temp_threshold = "23";
-      light_threshold = "200";
+      temp_threshold = "23.00";
+      light_threshold = "500.00";
       login();
     } else {
       Serial.println("Access Denied!");
       buzz_wrong();
       user = "---";
       tag = "---";
-      temp_threshold = "---";
-      light_threshold = "---";
+      temp_threshold = "24.00";
+      light_threshold = "900.00";
+      login();
     }
 
     tag = "";
